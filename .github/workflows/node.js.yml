@@ -28,3 +28,8 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build:staging
+    - name: Deploy to IIS
+      run: |
+        iisreset /stop
+        xcopy /s /y .\build\* C:\Deployment\CyberApp
+        iisreset /start
