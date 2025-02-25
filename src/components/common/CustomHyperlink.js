@@ -1,8 +1,16 @@
-function CustomHyperlink({title, link}){
+import colors from "../../styles/colors";
 
+function CustomHyperlink({title, link}){
+    const styles = {
+        hyperlink: {
+            color: colors.dustyBlue,
+            fontSize: "0.9em",
+            // textDecoration: "none",
+        }
+    }
     return(
         <>
-            <a href={link}>{title}</a>
+            <a href={link} style={styles.hyperlink}>{title}</a>
         </>
     )
 }
