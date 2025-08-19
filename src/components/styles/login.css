@@ -1,6 +1,6 @@
 .loginContainer {
     width: 100%;
-    height: 100vh; /* Full screen height */
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +8,7 @@
 }
 
 .loginCard {
-    width: 400px; /* Fixed width */
+    width: 400px; 
     padding: 30px;
     background: white;
     border-radius: 8px;
@@ -21,6 +21,10 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+.loginRow{
+    margin-bottom: 15px;
 }
 
 .forgot-link {

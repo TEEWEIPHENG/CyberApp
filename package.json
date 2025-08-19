@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.4.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^6.5.0",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
@@ -47,7 +47,8 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "babel-jest": "^29.7.0",
-    "env-cmd": "^10.1.0"
+    "env-cmd": "^10.1.0",
+    "react-router-dom": "^7.5.0"
   },
-  "proxy": "http://api.cybertip.com"
+  "proxy": "http://localhost:5000"
 }

@@ -1,9 +1,9 @@
-import colors from "../../styles/colors";
+import colors from "../styles/colors";
 
 function CustomHyperlink({title, link}){
     const styles = {
         hyperlink: {
-            color: colors.dustyBlue,
+            color: colors.warmTaupe,
             fontSize: "0.9em",
             // textDecoration: "none",
         }

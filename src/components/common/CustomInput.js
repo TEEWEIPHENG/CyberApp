@@ -43,34 +43,36 @@ function CustomInput({
     title,
     value,
     type = "text",
-    onChange = () => {},
+    onChange = () => { },
     placeholder = "",
     width = "100%",
 }) {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
-        <div style={{ ...styles.container, width }}>
-            <label
-                htmlFor={title}
-                style={{
-                    ...styles.label,
-                    ...(isFocused || value ? styles.labelFloating : {}),
-                }}
-            >
-                {title}
-            </label>
-            <input
-                id={title}
-                type={type}
-                style={{ ...styles.input, ...(isFocused ? styles.inputFocus : {}) }}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-            />
-        </div>
+        <>
+            <div style={{ ...styles.container, width }}>
+                <label
+                    htmlFor={title}
+                    style={{
+                        ...styles.label,
+                        ...(isFocused || value ? styles.labelFloating : {}),
+                    }}
+                >
+                    {title}
+                </label>
+                <input
+                    id={title}
+                    type={type}
+                    style={{ ...styles.input, ...(isFocused ? styles.inputFocus : {}) }}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                />
+            </div>
+        </>
     );
 }
 

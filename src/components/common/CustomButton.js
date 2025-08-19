@@ -1,5 +1,5 @@
-import React from "react";
-import colors from "../../styles/colors";
+import React, {useState} from "react";
+import colors from "../styles/colors";
 
 const styles = {
     buttonContainer: {
@@ -7,8 +7,8 @@ const styles = {
     },
     primary: {
         fontSize: "1.0em",
-        backgroundColor: colors.warmTaupe,
-        color: colors.softBeige,
+        backgroundColor: colors.beige,
+        color: colors.white ,
         padding: "10px 15px",
         borderRadius: "5px",
         border: "none",
@@ -41,6 +41,16 @@ const styles = {
         border: "none",
         cursor: "pointer",
         width: "100%",
+    },
+    primaryHover: {
+        fontSize: "1.0em",
+        backgroundColor: colors.warmTaupe,
+        color: colors.white ,
+        padding: "10px 15px",
+        borderRadius: "5px",
+        border: "none",
+        cursor: "pointer",
+        width: "100%",
     }
 }
 
@@ -49,29 +59,38 @@ function CustomButton({
     onClick = () =>{},
     buttonType = "primary"
 }){
+    const [hover, setHover] = useState(false);
+    const handleMouseEnter = () => {
+        setHover(true);
+    };
+    const handleMouseLeave = () => {
+        setHover(false);
+    };
+    const buttonStyle = hover ? styles.primaryHover : styles.primary;
+
     switch(buttonType){
         case "primary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.primary} onClick={onClick}>{title}</button>
+                    <button style={buttonStyle} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
                 </div>
             );
         case "secondary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.secondary} onClick={onClick}>{title}</button>
+                    <button style={styles.secondary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
                 </div>
             );
         case "tertiary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.tertiary} onClick={onClick}>{title}</button>
+                    <button style={styles.tertiary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
                 </div>
             );
         default:
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.other} onClick={onClick}>{title}</button>
+                    <button style={styles.other} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
                 </div>
             );
     }

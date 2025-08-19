@@ -6,22 +6,26 @@ import CustomHyperlink from '../common/CustomHyperlink';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../../styles/login.css';
+import '../styles/login.css';
 
 function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const onClickLoginButton = () => {
-        console.log(processLogin({ username, password }));
+    const onClickLoginButton = async () => {
+        const result = await processLogin({ username, password });
+        if(result){
+            console.log("Login successful:", result);
+        }else{
+            console.error("Login failed:", result);
+        }
     }
 
     return (
         <Container className="loginContainer">
             <div className="loginCard">
                 <h1 className="loginHeader">CyberTIP</h1>
-
-                <Row>
+                <Row className="loginRow">
                     <Col>
                         <CustomInput 
                             title="Username"
@@ -30,12 +34,12 @@ function LoginPage() {
                         />
 
                         <div className="forgot-link">
-                            <CustomHyperlink title="Forgot Username?" link="#" />
+                            <CustomHyperlink title="Forgot Username?" link="/forgotUsername" />
                         </div>
                     </Col>
                 </Row>
 
-                <Row>
+                <Row className="loginRow">
                     <Col>
                         <CustomInput 
                             title="Password"
@@ -44,20 +48,20 @@ function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <div className="forgot-link">
-                            <CustomHyperlink title="Forgot Password?" link="#" />
+                            <CustomHyperlink title="Forgot Password?" link="/forgotPassword" />
                         </div>
                     </Col>
                 </Row>
 
-                <Row>
+                <Row className="loginRow">
                     <Col>
                         <CustomButton class="loginBtn" title="Login" onClick={onClickLoginButton} buttonType="primary" />
                     </Col>
                 </Row>
 
-                <Row>
+                <Row className="loginRow">
                     <Col className="register-link">
-                        <CustomHyperlink title="No Account? Register Now!" link="#" />
+                        <CustomHyperlink title="No Account? Register Now!" link="/register" />
                     </Col>
                 </Row>
             </div>
