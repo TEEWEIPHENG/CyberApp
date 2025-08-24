@@ -16,6 +16,18 @@ const styles = {
     muted: {
         colors: colors.mutedBlush,
     },
+    error: {
+        colors: colors.errorRed,
+    },
+    warning: {
+        colors: colors.warningYellow,
+    },
+    success: {
+        colors: colors.successGreen,
+    },
+    info: {
+        colors: colors.infoBlue,
+    },
     normalText: {
         colors: colors.black,
     },
@@ -48,7 +60,31 @@ function CustomText({
         case "muted":
             return(
                 <>
-                    <h2 style={styles.muted}>{text}</h2>
+                    <p style={styles.muted}>{text}</p>
+                </>
+            );
+        case "error":
+            return(
+                <>
+                    <p style={styles.error}>{text}</p>
+                </>
+            );
+        case "warning":
+            return(
+                <>
+                    <p style={styles.warning}>{text}</p>
+                </>
+            );
+        case "success":
+            return(
+                <>
+                    <h2 style={styles.success}>{text}</h2>
+                </>
+            );
+        case "info":
+            return(
+                <>
+                    <p style={styles.info}>{text}</p>
                 </>
             );
         default:

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { processLogin } from '../../api/login';
+//custom components
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import CustomHyperlink from '../common/CustomHyperlink';
+import CustomText from '../common/CustomText';
+//bootstrap
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,13 +14,27 @@ import '../styles/login.css';
 function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
     const onClickLoginButton = async () => {
+        setError(null);
+
+        let missingFields = [];
+        if (!username) missingFields.push("Username");
+        if (!password) missingFields.push("Password");
+
+        if (missingFields.length > 0) {
+            setError(`${missingFields.join(", ")} is required.`);
+            return;
+        }
+        
         const result = await processLogin({ username, password });
-        if(result){
+        if(result && result.data && result.data.success){
             console.log("Login successful:", result);
+            // Redirect to home page or dashboard
         }else{
             console.error("Login failed:", result);
+            setError(result?.data?.message || "Fail to login");
         }
     }
 
@@ -64,7 +81,13 @@ function LoginPage() {
                         <CustomHyperlink title="No Account? Register Now!" link="/register" />
                     </Col>
                 </Row>
+                { error && (
+                    <div className="error-message">
+                        <CustomText text={error} type="error" />
+                    </div>
+                )}
             </div>
+             
         </Container>
     );
 }

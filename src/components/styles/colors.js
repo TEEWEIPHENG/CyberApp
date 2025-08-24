@@ -12,6 +12,10 @@ const colors = {
   warmGray: "#B8B8AA",
   softCream: "#FFFDD0",
   rustOrange: "#CB5A42",
+  errorRed: "#FF6347",
+  warningYellow: "#FFD700",
+  successGreen: "#32CD32",
+  infoBlue: "#4682B4",
 };
   
 export default colors;

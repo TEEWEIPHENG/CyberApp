@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //styles
 import '../styles/register.css';
 import CustomInput from '../common/CustomInput';
-import { Col, Row } from 'react-bootstrap';
 import CustomButton from '../common/CustomButton';
 import CustomHyperlink from '../common/CustomHyperlink';
 import CustomText from '../common/CustomText';
-import Container from 'react-bootstrap/Container';
+//mui
+import { Container } from '@mui/material';
+
 // API
 import useRegister from '../../hooks/useRegister';
+import Loading from '../common/Loading';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -18,128 +21,106 @@ function RegisterPage() {
     const [mobileNo, setmobileNo] = useState('');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
-    const { handleRegister, loading, error } = useRegister();
+    const { handleRegister, isLoading, apiError } = useRegister();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const onClickRegisterButton = async () => {
-        if (loading) {
-            console.error("Registration in progress, please wait...");
-            return;
-        }
+        setError(null);
+        let missingFields = [];
 
-        if(error) {
-            console.error("Error occurred during registration:", error);
+        if (!email) missingFields.push("Email");
+        if (!username) missingFields.push("Username");
+        if (!password) missingFields.push("Password");
+        if (!confirmPassword) missingFields.push("Confirm Password");
+        if (!mobileNo) missingFields.push("Mobile No");
+        if (!lastName) missingFields.push("Last Name");
+        if (!firstName) missingFields.push("First Name");
+
+        if (missingFields.length > 0) {
+            setError(`${missingFields.join(", ")} is required.`);
             return;
         }
 
         if (password !== confirmPassword) {
-            console.error("Passwords do not match");
-            return;
-        }
-        
-        if (!email || !username || !password || !confirmPassword || !mobileNo || !lastName || !firstName) {
-            console.error("All fields are required");
+            setError("Passwords do not match");
             return;
         }
 
         const result = await handleRegister({ email, username, password, confirmPassword, mobileNo, lastName, firstName });
-        if(result && result.statusText === "OK"){
-            console.log(result.data);
-        }else{
-            console.error("Registration failed:", result);
+
+        if (result && result.statusText === "OK") {
+            if(result.data && result.data.success) {
+                navigate("/login");
+            }else{
+                setError(result.data.message);
+            }
+        } else {
+            setError("Fail to register");
+            console.error("Registration failed:", apiError);
         }
     }
 
     return (
         <div className="registerContainer">
             <CustomText text="CyberTIP" type="title" />
-            <Container fluid >
-                <Row className="g-4">
-                    <Col>
-                        <CustomInput
-                            type="text"
-                            title="First Name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                    </Col>
-                    <Col>
-                    <CustomInput
-                        type="text"
-                        title="Last Name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                    </Col>
-                </Row>
+            <Container maxWidth="sm" >
+                <CustomInput
+                    type="text"
+                    title="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+                <CustomInput
+                    type="text"
+                    title="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+                <CustomInput
+                    type="email"
+                    title="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <CustomInput
+                    type="text"
+                    title="Mobile Number"
+                    value={mobileNo}
+                    onChange={(e) => setmobileNo(e.target.value)}
+                />
 
-                <Row className="g-4">
-                    <Col>
-                    <CustomInput
-                        type="email"
-                        title="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    </Col>
-                    <Col>
-                    <CustomInput
-                        type="text"
-                        title="Mobile Number"
-                        value={mobileNo}
-                        onChange={(e) => setmobileNo(e.target.value)}
-                    />
-                    </Col>
-                </Row>
-
-                <Row className="g-4">
-                    <Col>
-                    <CustomInput
-                        type="text"
-                        title="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    </Col>
-                </Row>
-
-                <Row className="g-4">
-                    <Col>
-                    <CustomInput
-                        type="password"
-                        title="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    </Col>
-                </Row>
-
-                <Row className="g-4">
-                    <Col>
-                    <CustomInput
-                        type="password"
-                        title="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    </Col>
-                </Row>
-
-                <Row className="g-4">
-                    <Col>
-                    <CustomButton title="Register" buttonType="primary" onClick={onClickRegisterButton} />
-                    </Col>
-                </Row>
-
-                <Row className="login-link">
-                    <Col>
-                    <CustomHyperlink title="Already have an account? Login" link="/login" />
-                    </Col>
-                </Row>
+                <CustomInput
+                    type="text"
+                    title="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <CustomInput
+                    type="password"
+                    title="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <CustomInput
+                    type="password"
+                    title="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <CustomButton title={isLoading ? "Registering..." : "Register"} buttonType="primary" onClick={onClickRegisterButton} disabled={isLoading}/>
+                <CustomHyperlink title="Already have an account? Login" link="/login" textAlign="center"/>
+                { error && (
+                    <div className="error-message">
+                        <CustomText text={error} type="error" />
+                    </div>
+                )}
+                
             </Container>
         </div>
     );
 
-    
+
 }
 
 export default RegisterPage;

@@ -9,6 +9,9 @@ export default function useRegister() {
         setLoading(true);
         setError(null);
         try {
+            console.log("Registering with data:", data);
+            console.log("loading:", loading);
+
             const response = await register.processRegister(data);
             return response;
         } catch (err) {
@@ -19,5 +22,5 @@ export default function useRegister() {
         }
     };
 
-    return { handleRegister, loading, error };
+    return { handleRegister, isLoading: loading, apiError: error };
 }
