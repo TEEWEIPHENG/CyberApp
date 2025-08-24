@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = (apiCall) => {
+export default function useFetch(apiCall) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -22,5 +22,3 @@ const useFetch = (apiCall) => {
 
     return { data, loading, error };
 };
-
-export default useFetch;
