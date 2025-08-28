@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { processLogin } from '../../api/login';
+import { useNavigate } from "react-router-dom";
+import useLogin from '../../hooks/useLogin';
 //custom components
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
@@ -12,13 +13,13 @@ import Col from 'react-bootstrap/Col';
 import '../styles/login.css';
 
 function LoginPage() {
+    const { handleLogin, loading, apiError } = useLogin();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(apiError);
+    const navigate = useNavigate();
 
     const onClickLoginButton = async () => {
-        setError(null);
-
         let missingFields = [];
         if (!username) missingFields.push("Username");
         if (!password) missingFields.push("Password");
@@ -28,12 +29,10 @@ function LoginPage() {
             return;
         }
         
-        const result = await processLogin({ username, password });
-        if(result && result.data && result.data.success){
-            console.log("Login successful:", result);
-            // Redirect to home page or dashboard
+        const result = await handleLogin({ username, password });
+        if(result){
+            navigate("/");
         }else{
-            console.error("Login failed:", result);
             setError(result?.data?.message || "Fail to login");
         }
     }
@@ -72,7 +71,7 @@ function LoginPage() {
 
                 <Row className="loginRow">
                     <Col>
-                        <CustomButton class="loginBtn" title="Login" onClick={onClickLoginButton} buttonType="primary" />
+                        <CustomButton class="loginBtn" title={loading ? "Loading..." : "Login"} onClick={onClickLoginButton} buttonType="primary" disabled={loading} />
                     </Col>
                 </Row>
 

@@ -2,14 +2,15 @@ import axios from 'axios';
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_BASE_API_URL,
-    timeout: 10000,
+    timeout: 20000,
     headers: {
         'Content-Type': 'application/json',
-    },
+    },  
+    withCredentials: true,
 });
 
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('authToken');
+    const token = sessionStorage.getItem('auth_session');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

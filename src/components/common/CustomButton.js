@@ -56,6 +56,7 @@ const styles = {
 
 function CustomButton({
     title,
+    disabled,
     onClick = () =>{},
     buttonType = "primary"
 }){
@@ -72,25 +73,25 @@ function CustomButton({
         case "primary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={buttonStyle} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
+                    <button style={buttonStyle} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} disabled={disabled}>{title}</button>
                 </div>
             );
         case "secondary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.secondary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
+                    <button style={styles.secondary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} disabled={disabled}>{title}</button>
                 </div>
             );
         case "tertiary":
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.tertiary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
+                    <button style={styles.tertiary} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} disabled={disabled}>{title}</button>
                 </div>
             );
         default:
             return(
                 <div style={styles.buttonContainer}>
-                    <button style={styles.other} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{title}</button>
+                    <button style={styles.other} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} disabled={disabled}>{title}</button>
                 </div>
             );
     }

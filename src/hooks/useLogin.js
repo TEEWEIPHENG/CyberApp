@@ -1,19 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import * as login from '../api/login';
 
 export default function useLogin() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
     const handleLogin = async (data) => {
         setLoading(true);
         setError(null);
+        
         try {
             const response = await login.processLogin(data);
-            return response;
+            if(response && response.data && response.data.success){
+                const { sessionToken, expiresAt } = response.data;
+
+                sessionStorage.setItem("auth_session", sessionToken);
+                sessionStorage.setItem("session_expiry", expiresAt);
+                return true;
+            }
+
+            return false
         } catch (err) {
+            console.log(err);
             setError(err?.response?.data || err.message);
-            return null;
+            return false;
         } finally {
             setLoading(false);
         }
