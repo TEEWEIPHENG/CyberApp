@@ -11,7 +11,6 @@ import { Container } from '@mui/material';
 
 // API
 import useRegister from '../../hooks/useRegister';
-import Loading from '../common/Loading';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import * as register from '../api/register';
 
 export default function useRegister() {
