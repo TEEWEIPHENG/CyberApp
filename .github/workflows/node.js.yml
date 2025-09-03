@@ -27,8 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm install
-    - run: CI=false npm run build:production
+    - run: npm run build:production
     - name: Deploy to IIS
       run: |
         xcopy /s /y .\build\* C:\Deployment\CyberApp
