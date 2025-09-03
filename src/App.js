@@ -8,7 +8,6 @@ import Home from './components/pages/Home';
 import LoginPage from './components/pages/Login';
 import RegisterPage from './components/pages/Register';
 import ForgotPassword from "./components/pages/ForgotPassword";
-import ForgotUsername from "./components/pages/ForgotUsername";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import GuestRoute from "./components/pages/GuestRoute";
 
@@ -19,7 +18,6 @@ function App() {
         <Route path="login" element={<GuestRoute><LoginPage /></GuestRoute>} />
         <Route path="register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
-        <Route path="forgotUsername" element={<ForgotUsername />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

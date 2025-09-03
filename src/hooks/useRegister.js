@@ -12,7 +12,7 @@ export default function useRegister() {
             console.log("Registering with data:", data);
             console.log("loading:", loading);
 
-            const response = await register.processRegister(data);
+            const response = await register.ProcessRegisterApi(data);
             return response;
         } catch (err) {
             setError(err?.response?.data || err.message);

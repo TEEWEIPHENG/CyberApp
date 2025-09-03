@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import checkAuth from "../../hooks/auth";
+import Loading from "../common/Loading";
+import { IsTokenExpired, ClearSessionAsync } from "../../hooks/useSession";
 
 function ProtectedRoute() {
   const [loading, setLoading] = useState(true);
@@ -9,20 +10,24 @@ function ProtectedRoute() {
   useEffect(() => {
     (async () => {
       try {
-        const ok = await checkAuth();
+        const ok = !IsTokenExpired();
         setAuthenticated(ok);
-        if(!ok)
-          sessionStorage.removeItem("auth_session");
+        if (!ok) {
+          await ClearSessionAsync();
+        }
+
       } catch {
         setAuthenticated(false);
-        sessionStorage.removeItem("auth_session");
+        await ClearSessionAsync();
+        sessionStorage.removeItem("session_expiry");
+
       } finally {
         setLoading(false);
       }
     })();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading fullscreen message="Please wait…" size={48} />;
   if (!authenticated) return <Navigate to="/login" replace />;
   return <Outlet />;
 }

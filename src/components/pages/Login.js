@@ -48,10 +48,9 @@ function LoginPage() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
-
-                        <div className="forgot-link">
+                        {/* <div className="forgot-link">
                             <CustomHyperlink title="Forgot Username?" link="/forgotUsername" />
-                        </div>
+                        </div> */}
                     </Col>
                 </Row>
 

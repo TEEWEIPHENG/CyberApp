@@ -1,24 +1,15 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { use, useState } from "react";
-import useLogin from "../../hooks/useLogin";
-import checkAuth,  { logout }   from "../../hooks/auth";
+import { useState } from "react";
+import { IsTokenExpired, ClearSessionAsync  }   from "../../hooks/useSession.js";
 
 function Layout() {
-  const [isAuthenticated, setIsAuthenticated] = useState(checkAuth());
+  const [isAuthenticated, setIsAuthenticated] = useState(!IsTokenExpired());
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
   const handleLogout = async () => {
-    var ok = await logout();
-    
-        console.log(ok);
-    if(ok){
+    var ok = await ClearSessionAsync();
+    if (ok) {
         setIsAuthenticated(false);
-        sessionStorage.removeItem("auth_session");
-        sessionStorage.removeItem("session_expiry");
 
         navigate("/login");
     }
@@ -26,25 +17,18 @@ function Layout() {
 
   return (
     <div>
-      {/* ✅ Navigation Bar */}
       <nav style={styles.navbar}>
         <h2 style={styles.logo}>CyberTIP</h2>
         <div style={styles.navLinks}>
           <Link to="/" style={styles.link}>Home</Link>
 
-          {/* ✅ Show Login or Logout Button */}
           {isAuthenticated ? (
             <button onClick={handleLogout} style={styles.button}>Logout</button>
-          ) : (
-            <div>
-                <button onClick={handleLogin} style={styles.button}>Create new account</button>
-                <button onClick={handleLogin} style={styles.button}>Login</button>
-            </div>
-          )}
+          ) : false
+          }
         </div>
       </nav>
 
-      {/* ✅ Page Content */}
       <main style={styles.content}>
         <Outlet />
       </main>

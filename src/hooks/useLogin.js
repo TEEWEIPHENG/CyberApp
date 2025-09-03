@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as login from '../api/login';
+import * as useSession from './useSession';
 
 export default function useLogin() {
     const [loading, setLoading] = useState(false);
@@ -9,12 +10,11 @@ export default function useLogin() {
         setError(null);
         
         try {
-            const response = await login.processLogin(data);
+            const response = await login.ProcessLoginApi(data);
             if(response && response.data && response.data.success){
-                const { sessionToken, expiresAt } = response.data;
-
-                sessionStorage.setItem("auth_session", sessionToken);
-                sessionStorage.setItem("session_expiry", expiresAt);
+                console.log(response);
+                const { sessionToken } = response.data;
+                useSession.SetSession(sessionToken);
                 return true;
             }
 
