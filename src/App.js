@@ -8,21 +8,25 @@ import Home from './components/pages/Home';
 import LoginPage from './components/pages/Login';
 import RegisterPage from './components/pages/Register';
 import ForgotPassword from "./components/pages/ForgotPassword";
-import ForgotUsername from "./components/pages/ForgotUsername";
+import ProtectedRoute from "./components/pages/ProtectedRoute";
+import GuestRoute from "./components/pages/GuestRoute";
 
 function App() {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="forgotPassword" element={<ForgotPassword />} />
-          <Route path="forgotUsername" element={<ForgotUsername />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="login" element={<GuestRoute><LoginPage /></GuestRoute>} />
+        <Route path="register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
+        <Route path="forgotPassword" element={<ForgotPassword />} />
+        <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            {/* more protected routes here */}
           </Route>
-        </Routes>
-      </BrowserRouter>
+        </Route>
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
