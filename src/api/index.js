@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { GetSession } from '../hooks/useSession';
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_BASE_API_URL,
@@ -10,7 +11,7 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-    const token = sessionStorage.getItem('auth_session');
+    const token = GetSession();
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
