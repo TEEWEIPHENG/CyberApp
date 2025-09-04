@@ -1,4 +1,4 @@
-import { LogoutApi, PingApi } from "../api/login";
+import { LogoutApi } from "../api/login";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
