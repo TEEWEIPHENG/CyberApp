@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as login from '../api/login';
-import * as useSession from './useSession';
+import { SetSession } from './useSession';
 
 export default function useLogin() {
     const [loading, setLoading] = useState(false);
@@ -11,14 +11,13 @@ export default function useLogin() {
         
         try {
             const response = await login.ProcessLoginApi(data);
+            console.log(response);
             if(response && response.data && response.data.success){
-                console.log(response);
-                const { sessionToken } = response.data;
-                useSession.SetSession(sessionToken);
+                SetSession(response.data.sessionToken);
                 return true;
+            }else{
+                return false;
             }
-
-            return false
         } catch (err) {
             console.log(err);
             setError(err?.response?.data || err.message);

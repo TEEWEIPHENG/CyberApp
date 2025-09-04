@@ -1,31 +1,22 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { IsTokenExpired, ClearSessionAsync  }   from "../../hooks/useSession.js";
+import { LogoutAsync } from "../../hooks/useSession";
 
 function Layout() {
-  const [isAuthenticated, setIsAuthenticated] = useState(!IsTokenExpired());
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    var ok = await ClearSessionAsync();
+    var ok = await LogoutAsync();
     if (ok) {
-        setIsAuthenticated(false);
-
-        navigate("/login");
+      navigate("/login");
     }
   };
-
   return (
     <div>
       <nav style={styles.navbar}>
         <h2 style={styles.logo}>CyberTIP</h2>
         <div style={styles.navLinks}>
           <Link to="/" style={styles.link}>Home</Link>
-
-          {isAuthenticated ? (
-            <button onClick={handleLogout} style={styles.button}>Logout</button>
-          ) : false
-          }
+          <button onClick={handleLogout} style={styles.button}>Logout</button>
         </div>
       </nav>
 
