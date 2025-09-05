@@ -10,6 +10,8 @@ import RegisterPage from './components/pages/Register';
 import ForgotPassword from "./components/pages/ForgotPassword";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import GuestRoute from "./components/pages/GuestRoute";
+import ChatPage from "./components/pages/Chat";
+import UserProfilePage from "./components/pages/UserProfilePage";
 
 function App() {
   return (
@@ -21,10 +23,11 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* more protected routes here */}
+            <Route path="chat" element={<ChatPage />} />
+            <Route path="userprofile" element={<UserProfilePage />} />
           </Route>
         </Route>
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        <Route path="*" element={<h1 style={{textAlign:"center"}}>404 - Page Not Found</h1>} />
       </Routes>
     </BrowserRouter>
   );
