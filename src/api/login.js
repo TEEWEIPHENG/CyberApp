@@ -17,3 +17,13 @@ export const LogoutApi = async () => {
         throw error;
     }
 };
+
+export const GetUserInfoApi = async () => {
+    try{
+        const response = await apiClient.get('/Login/GetUserInfo');
+        return response;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
